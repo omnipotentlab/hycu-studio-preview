@@ -346,7 +346,7 @@ const TEMPLATES = {
     { id: 'tech-grid', name: '컴퓨터공학과', meta: '공학·이학 계열', bg: 'linear-gradient(135deg, #1B2C3F, #0091B8)', accent: '#7DD8EE', shape: 'bar' },
   ],
   course: [
-    { id: 'cyan-modern', name: '시장조사 분석형', meta: 'CMK021 권장', bg: 'linear-gradient(135deg, #E6F5FA, #ffffff)', accent: '#0091B8', text: '#1B2C3F', shape: 'corner' },
+    { id: 'cyan-modern', name: 'AI 리터러시 분석형', meta: 'AIG101 권장', bg: 'linear-gradient(135deg, #E6F5FA, #ffffff)', accent: '#0091B8', text: '#1B2C3F', shape: 'corner' },
     { id: 'data-viz', name: '데이터 시각화형', meta: '통계·분석 과목', bg: 'linear-gradient(135deg, #F0F4F8, #D6E4F0)', accent: '#0091B8', text: '#1B2C3F', shape: 'bar' },
     { id: 'case-study', name: '사례 중심형', meta: '실무 사례 과목', bg: 'linear-gradient(135deg, #FFF8E6, #FAE4B5)', accent: '#F26B1C', text: '#5A3A0E', shape: 'circle' },
     { id: 'minimal', name: '미니멀 화이트', meta: '범용 사용', bg: '#FFFFFF', accent: '#1B2C3F', text: '#1B2C3F', shape: 'bar' },

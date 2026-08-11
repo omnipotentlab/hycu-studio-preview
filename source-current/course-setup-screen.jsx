@@ -193,7 +193,7 @@ const CQICard = () => (
     <CardTitle>콘텐츠 CQI보고서</CardTitle>
     <div style={{display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 14}}>
       <CQIRow label="학습자 요구 사항" lines={['실습 사례 확충', '평가 피드백 강화']}/>
-      <CQIRow label="교수자 요구사항" lines={['최신 통계 패키지 반영', 'AI 시장조사 사례 추가']}/>
+      <CQIRow label="교수자 요구사항" lines={['최신 AI 도구 사례 반영', '실무 프롬프트 예제 추가']}/>
       <CQIRow label="개선 사항" lines={['7주차 분량 재조정', '퀴즈 난이도 표준화']}/>
     </div>
     <div style={{display: 'flex', alignItems: 'center', gap: 12, paddingTop: 12, borderTop: '1px dashed var(--admin-line)'}}>

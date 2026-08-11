@@ -29,13 +29,13 @@ const LIB_SESSIONS = {
       { v: 1, at: '2026-07-30 15:44', slides: 27, status: 'archived', opt: '표준 톤 · 25매 · 기본', note: '초기 생성본', langs: ['KO'], by: 'AI 생성', dur: '3분 55초' },
     ]},
     { w: 5, s: 1, title: '생성형 AI의 이해와 업무 활용', attempts: [
-      { v: 1, at: '2026-08-03 09:31', slides: 30, status: 'editing', opt: '심화 톤 · 30매 · ADDIE 전체', note: 'Likert 논문 참고자료 반영', langs: ['KO'], by: 'AI 생성', dur: '5분 08초' },
+      { v: 1, at: '2026-08-03 09:31', slides: 30, status: 'editing', opt: '심화 톤 · 30매 · ADDIE 전체', note: 'NIST AI RMF 참고자료 반영', langs: ['KO'], by: 'AI 생성', dur: '5분 08초' },
     ]},
-    { w: 2, s: 1, title: '시장조사 산업의 변화', attempts: [
-      { v: 2, at: '2026-07-19 13:02', slides: 28, status: 'published', opt: '표준 톤 · 30매 · ADDIE 전체', note: '2026 산업 통계로 갱신', langs: ['KO','EN','ZH','VI'], by: 'AI 생성 + 직접 편집', dur: '4분 18초' },
+    { w: 2, s: 1, title: '데이터에서 패턴을 배우는 과정', attempts: [
+      { v: 2, at: '2026-07-19 13:02', slides: 28, status: 'published', opt: '표준 톤 · 30매 · ADDIE 전체', note: '2026 사례로 갱신', langs: ['KO','EN','ZH','VI'], by: 'AI 생성 + 직접 편집', dur: '4분 18초' },
       { v: 1, at: '2026-07-14 10:20', slides: 25, status: 'archived',  opt: '표준 톤 · 25매 · 기본', note: '초기 생성본', langs: ['KO'], by: 'AI 생성', dur: '3분 40초' },
     ]},
-    { w: 1, s: 1, title: '시장조사 정의와 역할', attempts: [
+    { w: 1, s: 1, title: 'AI 리터러시란 무엇인가', attempts: [
       { v: 1, at: '2026-07-10 09:00', slides: 27, status: 'published', opt: '표준 톤 · 25매 · 기본', note: '학기 첫 교안', langs: ['KO','EN'], by: 'AI 생성', dur: '3분 52초' },
     ]},
   ],

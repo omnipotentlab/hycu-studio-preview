@@ -205,10 +205,10 @@ const ConceptSlide = ({ slide, deck, instructorLive }) => (
 
 const ConceptDiagramSlide = ({ slide, deck, instructorLive }) => {
   const types = [
-    { name: '명목 척도', desc: '범주를 구분 (성별·지역·브랜드)', icon: '#', en: 'Nominal' },
-    { name: '서열 척도', desc: '순위만 의미 (선호 순위)', icon: '≤', en: 'Ordinal' },
-    { name: '등간 척도', desc: '간격이 동일 (Likert 1~5점)', icon: '↔', en: 'Interval' },
-    { name: '비율 척도', desc: '절대 영점 존재 (구매 금액)', icon: '◎', en: 'Ratio' },
+    { name: '규칙 기반 시스템', desc: '사람이 정한 규칙대로만 동작 (초기 챗봇)', icon: '§', en: 'Rule-based' },
+    { name: '머신러닝', desc: '데이터에서 패턴을 학습해 판단 (스팸 분류)', icon: '∑', en: 'Machine Learning' },
+    { name: '딥러닝', desc: '다층 신경망으로 복잡한 패턴 학습 (이미지 인식)', icon: '◇', en: 'Deep Learning' },
+    { name: '생성형 AI', desc: '학습한 패턴으로 새 결과를 직접 생성 (텍스트·이미지)', icon: '✦', en: 'Generative AI' },
   ];
   return (
     <>
@@ -232,10 +232,10 @@ const ConceptDiagramSlide = ({ slide, deck, instructorLive }) => {
         <div style={{position:'absolute',left:0,bottom:30,display:'flex',gap:14}}>
           <div className="summary-card" style={{width:540}}>
             <div className="head">핵심 정리</div>
-            <div className="body">측정 수준은 위계적이며, 상위 수준일수록 더 많은 통계 분석이 가능하다. 분석 목적에 맞는 척도 선택이 데이터 품질의 출발점이다.</div>
+            <div className="body">규칙 기반에서 생성형 AI로 갈수록 사람이 직접 정하는 규칙은 줄고, 데이터에서 스스로 패턴을 찾는 비중이 커진다. 지금의 생성형 AI는 이 발전의 가장 최근 단계다.</div>
           </div>
           <div style={{display:'flex',flexWrap:'wrap',alignContent:'center'}}>
-            {['평균 계산', 't-검정', '상관분석', '회귀분석'].map(k => (
+            {['패턴 학습', '입력 결합', '결과 생성', '반복 개선'].map(k => (
               <span key={k} className="chip">{k}</span>
             ))}
           </div>
@@ -257,8 +257,8 @@ const ModelDiagramSlide = ({ slide, deck, instructorLive }) => (
         <div style={{position:'relative',height:340,background:'white',border:'1px solid #E9ECF0',borderRadius:12,padding:24}}>
           {/* Central executive */}
           <div style={{position:'absolute',left:'50%',top:24,transform:'translateX(-50%)',width:280,padding:'14px 18px',background:'#00B5E2',color:'white',borderRadius:12,textAlign:'center',fontFamily:'HYCUGothicM',fontSize:17,fontWeight:600,boxShadow:'0 4px 16px rgba(0,181,226,0.25)'}}>
-            Likert 척도 (5-point)
-            <div style={{fontFamily:'HYCUGothicL',fontSize:12,fontWeight:400,marginTop:3,opacity:0.9}}>동의 정도 · 다항목 합산 · 신뢰도 강화</div>
+            좋은 프롬프트
+            <div style={{fontFamily:'HYCUGothicL',fontSize:12,fontWeight:400,marginTop:3,opacity:0.9}}>목표·맥락·자료·제약·형식을 한 번에 설계</div>
           </div>
           {/* Lines */}
           <svg style={{position:'absolute',inset:0,width:'100%',height:'100%',pointerEvents:'none'}}>
@@ -268,9 +268,9 @@ const ModelDiagramSlide = ({ slide, deck, instructorLive }) => (
           </svg>
           {/* Three subsystems */}
           {[
-            { x: '4%', label: '의미차별 척도', en: 'Semantic Differential', desc: '양극 형용사 쌍' },
-            { x: '36%', label: 'Stapel 척도', en: 'Stapel Scale', desc: '단극 10점 평가' },
-            { x: '68%', label: 'Guttman 척도', en: 'Guttman Scale', desc: '누적 응답 구조' },
+            { x: '4%', label: '목표·맥락', en: 'Goal & Context', desc: '무엇을 왜 원하는가' },
+            { x: '36%', label: '자료·제약', en: 'Data & Constraints', desc: '참고자료와 지켜야 할 조건' },
+            { x: '68%', label: '출력 형식', en: 'Output Format', desc: '결과를 어떤 형태로 받을지' },
           ].map((s, i) => (
             <div key={i} style={{position:'absolute',left:s.x,top:200,width:'28%',padding:'14px 16px',background:'white',border:'1.5px solid #00B5E2',borderRadius:10,textAlign:'center'}}>
               <div style={{fontFamily:'HYCUGothicM',fontSize:15,color:'#0E1116',fontWeight:600}}>{s.label}</div>
@@ -305,14 +305,14 @@ const ComparisonSlide = ({ slide, deck, instructorLive }) => (
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',background:'white',border:'1px solid #E9ECF0',borderRadius:12,overflow:'hidden'}}>
           {/* Header */}
           <div style={{padding:'18px 20px',background:'rgba(0,181,226,0.12)',fontFamily:'HYCUGothicM',fontSize:14,color:'#5A6473'}}>구분</div>
-          <div style={{padding:'18px 20px',background:'rgba(0,181,226,0.12)',fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',fontWeight:600,borderLeft:'1px solid #E9ECF0'}}>신뢰도</div>
-          <div style={{padding:'18px 20px',background:'rgba(0,181,226,0.12)',fontFamily:'HYCUGothicM',fontSize:18,color:'#0091B8',fontWeight:600,borderLeft:'1px solid #E9ECF0'}}>타당도</div>
+          <div style={{padding:'18px 20px',background:'rgba(0,181,226,0.12)',fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',fontWeight:600,borderLeft:'1px solid #E9ECF0'}}>AI가 하는 일</div>
+          <div style={{padding:'18px 20px',background:'rgba(0,181,226,0.12)',fontFamily:'HYCUGothicM',fontSize:18,color:'#0091B8',fontWeight:600,borderLeft:'1px solid #E9ECF0'}}>사람이 하는 일</div>
           {[
-            ['핵심 질문', '얼마나 일관되게 측정하는가', '얼마나 정확하게 측정하는가'],
-            ['평가 대상', '측정의 안정성·재현성', '측정의 의미·진실성'],
-            ['대표 지표', 'Cronbach α ≥ 0.7', '내용·기준·구성 타당도'],
-            ['평가 방법', '재검사·반분·내적 일관성', '요인분석·MTMM'],
-            ['관계', '타당도의 필요조건', '신뢰도가 높아도 미충족 가능'],
+            ['핵심 역할', '빠르게 초안·후보를 생성한다', '맥락에 맞는지 판단한다'],
+            ['속도', '즉시, 대량으로 생성 가능', '검토에는 시간이 필요하다'],
+            ['오류 특성', '그럴듯하지만 틀릴 수 있다(환각)', '틀린 부분을 알아볼 수 있다'],
+            ['확인 방법', '근거·출처를 함께 요청한다', '원문·사실과 대조해 검증한다'],
+            ['최종 책임', 'AI는 결과를 책임지지 않는다', '사용·배포의 책임은 사람에게 있다'],
           ].map((row, i) => (
             <React.Fragment key={i}>
               <div style={{padding:'14px 20px',fontFamily:'HYCUGothicM',fontSize:14,color:'#5A6473',background: i%2 ? '#F5F7FA':'white',borderTop:'1px solid #E9ECF0'}}>{row[0]}</div>
@@ -323,7 +323,7 @@ const ComparisonSlide = ({ slide, deck, instructorLive }) => (
         </div>
         <div className="summary-card" style={{marginTop:14}}>
           <div className="head">핵심 정리</div>
-          <div className="body">신뢰도와 타당도는 별개의 개념이다. 신뢰도가 높아도 측정 대상이 잘못 정의되면 타당도가 낮을 수 있다. 신뢰도는 타당도의 필요조건이지만 충분조건은 아니다.</div>
+          <div className="body">AI는 속도, 사람은 판단 — 이 둘은 대체 관계가 아니라 역할 분담이다. AI가 빨리 만들어도 사람이 검증하지 않으면 오류가 그대로 결과물에 남는다.</div>
         </div>
       </div>
     </div>
@@ -341,41 +341,41 @@ const ActivitySlide = ({ slide, deck, instructorLive }) => (
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:16}}>
           <div style={{background:'white',border:'1px solid #E9ECF0',borderRadius:12,padding:20}}>
             <div style={{fontFamily:'HYCUGothicM',fontSize:11,color:'#0091B8',letterSpacing:'0.08em',textTransform:'uppercase',fontWeight:600}}>활동 안내</div>
-            <div style={{fontFamily:'HYCUGothicM',fontSize:22,color:'#0E1116',marginTop:6,fontWeight:600}}>Likert 척도 설계 실습</div>
+            <div style={{fontFamily:'HYCUGothicM',fontSize:22,color:'#0E1116',marginTop:6,fontWeight:600}}>업무 하나를 AI 협업으로 재설계</div>
             <div style={{fontFamily:'HYCUGothicL',fontSize:16,color:'#3F4753',marginTop:10,lineHeight:1.6}}>
-              브랜드 만족도를 측정하는 <strong style={{color:'#0091B8'}}>5개 문항</strong>을 작성합니다.
-              동일 개념을 다양한 표현으로 측정해 신뢰도를 확보합니다.
+              본인의 실제 업무 하나를 골라 <strong style={{color:'#0091B8'}}>목표·맥락·자료·제약·형식</strong>을 갖춘 프롬프트로 작성합니다.
+              AI가 만든 결과를 어떻게 검증할지도 함께 정합니다.
             </div>
           </div>
           <div style={{background:'#F5F7FA',borderRadius:12,padding:20}}>
             <div style={{fontFamily:'HYCUGothicM',fontSize:11,color:'#5A6473',letterSpacing:'0.08em',textTransform:'uppercase',fontWeight:600}}>진행 정보</div>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12,marginTop:12}}>
-              <div><div style={{fontSize:11,color:'#7A8390'}}>소요 시간</div><div style={{fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',marginTop:2,fontWeight:600}}>5분</div></div>
-              <div><div style={{fontSize:11,color:'#7A8390'}}>난이도</div><div style={{fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',marginTop:2,fontWeight:600}}>5-point</div></div>
-              <div><div style={{fontSize:11,color:'#7A8390'}}>도구</div><div style={{fontFamily:'HYCUGothicM',fontSize:14,color:'#0E1116',marginTop:2,fontWeight:500}}>LMS 활동 모듈</div></div>
-              <div><div style={{fontSize:11,color:'#7A8390'}}>산출물</div><div style={{fontFamily:'HYCUGothicM',fontSize:14,color:'#0E1116',marginTop:2,fontWeight:500}}>문항 5개 + 척도</div></div>
+              <div><div style={{fontSize:11,color:'#7A8390'}}>소요 시간</div><div style={{fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',marginTop:2,fontWeight:600}}>7분</div></div>
+              <div><div style={{fontSize:11,color:'#7A8390'}}>단계</div><div style={{fontFamily:'HYCUGothicM',fontSize:18,color:'#0E1116',marginTop:2,fontWeight:600}}>5단계</div></div>
+              <div><div style={{fontSize:11,color:'#7A8390'}}>도구</div><div style={{fontFamily:'HYCUGothicM',fontSize:14,color:'#0E1116',marginTop:2,fontWeight:500}}>AI 튜터 실습 모듈</div></div>
+              <div><div style={{fontSize:11,color:'#7A8390'}}>산출물</div><div style={{fontFamily:'HYCUGothicM',fontSize:14,color:'#0E1116',marginTop:2,fontWeight:500}}>프롬프트 1개 + 검증 계획</div></div>
             </div>
           </div>
         </div>
         {/* Stimulus row */}
         <div style={{background:'white',border:'1px solid #E9ECF0',borderRadius:12,padding:'24px 20px'}}>
           <div style={{display:'flex',gap:10,justifyContent:'center'}}>
-            {['1','2','3','4','5'].map((c,i) => {
-              const isMatch = c === '4';
+            {['목표', '맥락', '자료', '제약', '형식'].map((c,i) => {
+              const isMatch = i === 4;
               return (
-                <div key={i} style={{width:74,height:74,borderRadius:12,background:isMatch?'rgba(0,181,226,0.12)':'#F5F7FA',border:isMatch?'2px solid #00B5E2':'1px solid #E9ECF0',display:'grid',placeItems:'center',fontFamily:'HYCUMyungJoB',fontSize:34,color:isMatch?'#0091B8':'#1E2530'}}>
+                <div key={i} style={{width:110,height:74,borderRadius:12,background:isMatch?'rgba(0,181,226,0.12)':'#F5F7FA',border:isMatch?'2px solid #00B5E2':'1px solid #E9ECF0',display:'grid',placeItems:'center',fontFamily:'HYCUGothicM',fontSize:16,color:isMatch?'#0091B8':'#1E2530'}}>
                   {c}
                 </div>
               );
             })}
           </div>
           <div style={{textAlign:'center',marginTop:16,fontFamily:'HYCUGothicL',fontSize:14,color:'#5A6473'}}>
-            ← <strong>전혀 그렇지 않다</strong> · 보통이다 · <strong style={{color:'#0091B8',fontFamily:'HYCUGothicM'}}>매우 그렇다</strong> →
+            다섯 요소를 순서대로 채워 <strong style={{color:'#0091B8',fontFamily:'HYCUGothicM'}}>하나의 완성된 프롬프트</strong>로 만듭니다
           </div>
         </div>
         <div className="check-card" style={{marginTop:14}}>
           <div className="head">✓ 활동 후 토론 질문</div>
-          <div className="body">「이 브랜드를 친구에게 추천하고 싶다」와 「이 브랜드는 좋은 브랜드이다」는 동일 개념을 측정하나요, 다른 개념인가요? Cronbach α는 어떻게 달라질까요?</div>
+          <div className="body">AI가 내놓은 결과 중 어느 부분을 그대로 쓸 수 있고, 어느 부분은 반드시 사람이 다시 확인해야 하나요?</div>
         </div>
       </div>
     </div>
@@ -393,14 +393,14 @@ const QuizSlide = ({ slide, deck, instructorLive }) => (
         <div style={{background:'white',border:'1px solid #E9ECF0',borderRadius:12,padding:'22px 24px'}}>
           <div style={{fontFamily:'HYCUGothicM',fontSize:11,color:'#0091B8',letterSpacing:'0.08em',textTransform:'uppercase',fontWeight:600}}>문항 1 · 다지선다</div>
           <div style={{fontFamily:'HYCUGothicM',fontSize:22,color:'#0E1116',marginTop:8,fontWeight:600,lineHeight:1.4}}>
-            응답자에게 음료 브랜드 5개의 선호 순위를 매기게 하여 1~5위로 응답을 받았다. 이 데이터의 측정 수준은?
+            업무용 AI 챗봇에 입력해도 비교적 안전한 것은?
           </div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginTop:18}}>
             {[
-              { l: 'A', t: '명목 척도 (Nominal scale)' },
-              { l: 'B', t: '서열 척도 (Ordinal scale)', correct: true },
-              { l: 'C', t: '등간 척도 (Interval scale)' },
-              { l: 'D', t: '비율 척도 (Ratio scale)' },
+              { l: 'A', t: '고객의 실명·연락처가 포함된 상담 기록' },
+              { l: 'B', t: '사내 미공개 재무 수치' },
+              { l: 'C', t: '개인정보를 가린(익명화한) 업무 요약문', correct: true },
+              { l: 'D', t: '회사 비밀번호·API 키' },
             ].map(c => (
               <div key={c.l} style={{display:'flex',gap:12,alignItems:'center',padding:'12px 14px',border:`1.5px solid ${c.correct?'#00B5E2':'#E9ECF0'}`,borderRadius:8,background:c.correct?'rgba(0,181,226,0.04)':'white'}}>
                 <div style={{width:26,height:26,borderRadius:'50%',border:`1.5px solid ${c.correct?'#00B5E2':'#D5DBE2'}`,display:'grid',placeItems:'center',fontFamily:'HYCUGothicM',fontSize:13,color:c.correct?'#0091B8':'#5A6473',background:c.correct?'rgba(0,181,226,0.1)':'white'}}>
@@ -414,11 +414,11 @@ const QuizSlide = ({ slide, deck, instructorLive }) => (
         <div style={{marginTop:14,display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
           <div className="check-card">
             <div className="head">정답 풀이 (강의 중 가림)</div>
-            <div className="body">순위는 대소 관계만 의미하며, 1위와 2위의 간격이 2위와 3위의 간격과 같다고 보장할 수 없습니다. 평균 계산이 부적절한 이유입니다.</div>
+            <div className="body">실명·연락처·재무정보·비밀번호는 외부 AI 서버로 전송되는 순간 통제권을 잃습니다. 업무에 AI를 쓰려면 먼저 개인정보·기밀을 가리는 습관이 필요합니다.</div>
           </div>
           <div className="summary-card">
             <div className="head">학습 목표 연결</div>
-            <div className="body">목표 ① 측정 수준 4가지를 구분 — 서열 척도의 사례 식별 능력</div>
+            <div className="body">목표 ④ 개인정보와 저작권을 고려해 사람과 AI의 역할을 나눌 수 있다</div>
           </div>
         </div>
       </div>
@@ -448,13 +448,13 @@ const PlaceholderSlide = ({ slide, deck, instructorLive }) => (
 const SummarySlide = ({ slide, deck, instructorLive }) => (
   <>
     <SlideHeader chapter={deck.chapter} subchapter={deck.subchapter} phase={slide.phase} />
-    <SlideTitle title="이번 교시 핵심 정리" subtitle="기억해야 할 3가지" />
+    <SlideTitle title="이번 교시 핵심 정리" subtitle="구조화된 요청·근거 검증·사람의 책임" />
     <div className="body">
       <div style={{width:880}}>
         {[
-          { n: '01', t: '측정 수준이 분석 방법을 결정한다', d: '명목·서열·등간·비율의 4가지 수준은 위계적이며, 상위 수준일수록 평균·분산 등 더 풍부한 통계 분석이 가능하다.' },
-          { n: '02', t: '신뢰도와 타당도는 별개의 개념이다', d: '신뢰도는 측정의 일관성, 타당도는 측정의 진실성. 신뢰도는 타당도의 필요조건이지만 충분조건은 아니다.' },
-          { n: '03', t: 'Likert 척도는 다항목 합산이 핵심이다', d: '단일 문항보다 여러 문항의 합산이 신뢰도를 높이며, Cronbach α ≥ 0.7을 기준으로 척도의 내적 일관성을 평가한다.' },
+          { n: '01', t: '구조화된 요청이 결과를 결정한다', d: '목표·맥락·자료·제약·형식 다섯 요소를 갖춘 프롬프트가 AI의 추측을 줄이고 원하는 결과에 가깝게 만든다.' },
+          { n: '02', t: 'AI 결과는 근거로 검증한다', d: 'AI는 그럴듯하지만 틀린 답(환각)을 낼 수 있다. 출처·원문과 대조해 확인 가능한 주장만 신뢰한다.' },
+          { n: '03', t: '최종 책임은 사람에게 있다', d: 'AI는 속도와 초안을 제공하지만, 사용·배포에 대한 판단과 책임은 항상 사람이 진다.' },
         ].map(s => (
           <div key={s.n} style={{display:'flex',gap:18,padding:'18px 20px',background:'white',border:'1px solid #E9ECF0',borderRadius:12,marginBottom:12}}>
             <div style={{fontFamily:'HYCUMyungJoB',fontSize:32,color:'#00B5E2',width:60,fontWeight:700}}>{s.n}</div>
@@ -466,9 +466,9 @@ const SummarySlide = ({ slide, deck, instructorLive }) => (
         ))}
         <div style={{background:'#F5F7FA',borderLeft:'4px solid #00B5E2',borderRadius:8,padding:'18px 22px',marginTop:8}}>
           <div style={{fontFamily:'HYCUMyungJoL',fontSize:20,lineHeight:1.5,color:'#0E1116',letterSpacing:'-0.005em'}}>
-            "다음 교시에는 이 측정 도구로 수집한 자료를 어떻게 설문지로 설계하는지를 살펴봅니다."
+            "다음 교시에는 오늘 배운 프롬프트 설계를 바탕으로, 여러 단계를 스스로 수행하는 AI 에이전트를 살펴봅니다."
           </div>
-          <div style={{fontFamily:'HYCUGothicL',fontSize:13,color:'#5A6473',marginTop:8}}>— 다음 교시 예고: 06교시 ▸ 설문지 설계와 질문 구성</div>
+          <div style={{fontFamily:'HYCUGothicL',fontSize:13,color:'#5A6473',marginTop:8}}>— 다음 교시 예고: Ch.06 ▸ AI 에이전트와 자동화</div>
         </div>
       </div>
     </div>
@@ -487,8 +487,8 @@ const RoadmapSlide = ({ slide, deck, instructorLive }) => (
           {[
             { n: 1, ph: 'A', name: '도입·진단', t: '5분', desc: '학습 전 진단 질문' },
             { n: 2, ph: 'D', name: '학습 목표', t: '3분', desc: '4개 목표 + 키워드' },
-            { n: 3, ph: 'Dv', name: '개념 전개', t: '32분', desc: '측정 수준 → 척도 설계 → 신뢰도' },
-            { n: 4, ph: 'I', name: '활동·실습', t: '8분', desc: 'Likert 설계 실습' },
+            { n: 3, ph: 'Dv', name: '개념 전개', t: '32분', desc: '생성형 AI 원리 → 프롬프트 설계 → 검증' },
+            { n: 4, ph: 'I', name: '활동·실습', t: '8분', desc: 'AI 협업 프롬프트 실습' },
             { n: 5, ph: 'E', name: '평가·정리', t: '2분', desc: '형성평가 3문항' },
           ].map((s, i, arr) => (
             <React.Fragment key={i}>
@@ -530,15 +530,15 @@ const AnalysisSlide = ({ slide, deck, instructorLive }) => (
       <div style={{width:880}}>
         <div style={{background:'#F5F7FA',borderLeft:'4px solid #00B5E2',borderRadius:8,padding:'28px 32px',marginBottom:18}}>
           <div style={{fontFamily:'HYCUMyungJoL',fontSize:30,lineHeight:1.45,color:'#0E1116',letterSpacing:'-0.01em'}}>
-            "시장을 제대로 이해하려면, 무엇을 어떻게 측정해야 할까?"
+            "AI에게 시키기 전에, 나는 이 일을 왜·어떻게 맡기려는가?"
           </div>
         </div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
           {[
-            { q: '브랜드 선호도를 어떻게 숫자로 표현할까?', a: 'Likert 척도 같은 등간 측정' },
-            { q: '설문 결과를 믿을 수 있을까?', a: '신뢰도 · 타당도 검증 필요' },
-            { q: '다른 표현으로 물으면 다른 결과가 나올까?', a: '표현 타당도 · 재구성 검증' },
-            { q: '몇 개의 문항으로 측정해야 할까?', a: '다항목 설계 · Cronbach α ≥ 0.7' },
+            { q: '이 업무를 AI에게 맡겨도 되는가?', a: '정형성·창의성·위험도로 판단' },
+            { q: 'AI가 만든 결과를 믿을 수 있는가?', a: '근거·출처 대조 검증 필요' },
+            { q: '다르게 물으면 다른 답이 나오는가?', a: '프롬프트 구조에 따라 결과가 달라짐' },
+            { q: '어디까지 사람이 확인해야 하는가?', a: '최종 판단과 책임은 항상 사람의 몫' },
           ].map((p, i) => (
             <div key={i} style={{background:'white',border:'1px solid #E9ECF0',borderRadius:10,padding:'14px 18px'}}>
               <div style={{fontFamily:'HYCUGothicM',fontSize:14,color:'#0E1116',fontWeight:600}}>{p.q}</div>
@@ -564,89 +564,86 @@ const CT = {
 
 const SLIDE_BODIES = {
   9:  { kind: 'bullets', items: [
-        '진술문은 한 문장에 하나의 태도만 담는다 — 이중 질문 금지',
-        '긍정·부정 문항을 섞어 묵종 편향을 상쇄한다',
-        '5점 vs 7점: 응답자 변별력과 분석 목적으로 결정',
-        '역채점 문항은 합산 전 반드시 재코딩',
-      ], note: 'Likert 문항 작성 4원칙' },
-  10: { kind: 'pairs', pairs: [
-        ['저렴한','비싼'], ['신뢰가는','의심스러운'], ['세련된','촌스러운'], ['친근한','거리감 있는'], ['혁신적인','보수적인'],
-      ], note: '양극 형용사 7점 배치 — 브랜드 이미지 프로파일' },
-  11: { kind: 'chart', unit: 'Cronbach α', bars: [
-        { label: '0.9 이상 · 우수', v: 95, c: '#0091B8' },
-        { label: '0.8 이상 · 양호', v: 85, c: '#00B5E2' },
-        { label: '0.7 이상 · 수용 가능', v: 72, c: '#7DD3E8' },
-        { label: '0.6 미만 · 재검토', v: 55, c: '#C9CFD7' },
-      ], note: 'α는 단일차원성을 보장하지 않는다 — 요인분석 병행' },
-  12: { kind: 'flow', steps: ['관측값', '진점수', '체계적 오차', '무작위 오차'], ops: ['=', '+', '+'],
-        note: '체계적 오차 → 타당도 훼손 · 무작위 오차 → 신뢰도 훼손' },
-  13: { kind: 'chart', unit: '신뢰도', bars: [
-        { label: '2문항', v: 55, c: '#C9CFD7' },
-        { label: '4문항', v: 72, c: '#7DD3E8' },
-        { label: '6문항', v: 82, c: '#00B5E2' },
-        { label: '8문항', v: 86, c: '#0091B8' },
-        { label: '10문항', v: 88, c: '#0091B8' },
-      ], note: 'Spearman-Brown — 6~8문항 이후 상승 둔화, 응답 부담과 트레이드오프' },
-  14: { kind: 'tree', root: '고객 만족 (구성개념)', mids: ['제품 만족', '서비스 만족', '가격 만족'], leaf: '차원별 2~3문항 → 합산 척도',
-        note: '기존 검증 척도(published scale) 재사용 우선' },
-  15: { kind: 'table', head: ['', 'NPS 단일 문항', '다항목 만족도'], rows: [
-        ['용도', '간편 추적 · 벤치마크', '진단 · 원인 분석'],
-        ['예측 타당도', '보통', '높음 (메타분석 우위)'],
-        ['응답 부담', '매우 낮음', '중간'],
-        ['개선 인사이트', '제한적', '차원별 도출 가능'],
-      ], note: '조사 목적(추적 vs 진단)에 따라 척도를 선택한다' },
-  17: { kind: 'table', head: ['#', '긍정 극', '부정 극', '검증 포인트'], rows: [
-        ['1', '전통 있는', '역사가 짧은', '진짜 반대 개념인가'],
-        ['2', '실용적인', '이론적인', '한쪽으로 유도되지 않는가'],
-        ['3', '개방적인', '폐쇄적인', '중복 쌍은 없는가'],
-        ['4', '따뜻한', '차가운', '측정 목적과 맞는가'],
-      ], note: '활동 — 우리 학교 브랜드 이미지 형용사 쌍 도출' },
+        '요청은 구체적으로 — "잘 써줘"보다 "무엇을 위해 어떤 형식으로"',
+        '필요한 맥락(배경·독자·상황)을 함께 제공한다',
+        '지켜야 할 제약(분량·톤·금지사항)을 미리 명시한다',
+        '한 번에 완성하려 하지 말고 결과를 보며 반복 개선한다',
+      ], note: '좋은 프롬프트 네 가지 원칙' },
+  10: { kind: 'table', head: ['업무 특성', 'AI 활용 정도', '이유'], rows: [
+        ['정형적 반복 업무', '높음 — 대부분 위임', '규칙이 명확해 결과 검증이 쉽다'],
+        ['창의적 기획 업무', '중간 — 초안 생성 보조', '방향 설정은 사람, 확장은 AI'],
+        ['고위험 판단 업무', '낮음 — 참고 자료 수준', '오류 시 파급력이 커 사람 판단 필수'],
+      ], note: '정형성·창의성·위험도로 활용 범위를 정한다' },
+  11: { kind: 'kanban', cols: [
+        { t: 'AI에게 맡기기', c: '#0091B8', cards: ['반복 초안 작성', '자료 요약', '형식 변환'] },
+        { t: '함께 하기', c: '#6A4FB7', cards: ['아이디어 확장', '초안 다듬기', '대안 비교'] },
+        { t: '사람이 유지', c: '#2FA76A', cards: ['최종 판단', '책임 있는 결정', '민감정보 처리'] },
+      ], note: '속도보다 검토 가능성과 책임 소재를 먼저 본다' },
+  12: { kind: 'flow', steps: ['목표·맥락', '자료·제약', '생성 결과', '검증된 결과'], ops: ['+', '→', '→'],
+        note: '입력이 명확할수록, 검증을 거칠수록 결과 품질이 올라간다' },
+  13: { kind: 'chart', unit: '결과 품질', bars: [
+        { label: '초안', v: 55, c: '#C9CFD7' },
+        { label: '1차 피드백 후', v: 72, c: '#7DD3E8' },
+        { label: '2차 피드백 후', v: 85, c: '#00B5E2' },
+        { label: '3차 피드백 후', v: 90, c: '#0091B8' },
+      ], note: '짧은 반복 루프 — 몇 차례 개선 후엔 상승폭이 줄어든다' },
+  14: { kind: 'tree', root: 'AI 활용', mids: ['탐색', '생성', '자동화'], leaf: '단계마다 사람의 검토 지점을 둔다',
+        note: '탐색(정보 수집) → 생성(초안 작성) → 자동화(반복 업무 연결)' },
+  15: { kind: 'table', head: ['', 'AI의 강점', '사람의 강점'], rows: [
+        ['속도', '즉시·대량 생성', '느리지만 신중'],
+        ['일관성', '지치지 않고 반복', '맥락에 따라 유연'],
+        ['판단', '패턴 기반 추정', '책임 있는 최종 결정'],
+        ['한계', '근거 없이도 그럴듯하게 답함', '모르면 모른다고 말할 수 있음'],
+      ], note: '반복과 초안은 AI, 판단과 책임은 사람' },
+  17: { kind: 'pairs', pairs: [
+        ['보고서 써줘','3분기 매출보고서 초안, 표 포함 A4 2장'], ['정리해줘','회의록에서 결정사항만 불릿 5개로'], ['더 좋게','더 간결하게, 전문용어 줄여서'], ['빨리 해줘','핵심만 3줄로 먼저'], ['알아서 해줘','참고자료 첨부, 톤은 격식체로'],
+      ], note: '활동 — 모호한 요청을 목표·맥락·제약·형식으로 다시 쓴다' },
   18: { kind: 'kanban', cols: [
-        { t: '원인', c: '#6A4FB7', cards: ['판단 회피 심리', '문항 피로', '사회적 바람직성'] },
-        { t: '설계로 줄이기', c: '#0091B8', cards: ['짝수 척도 검토', '문항 수 절감', '역문항 배치'] },
-        { t: '분석으로 보정', c: '#2FA76A', cards: ['응답 패턴 필터링', '표준화 점수 사용'] },
-      ], note: '토론 — 중심화 경향·묵종 응답' },
-  20: { kind: 'quiz', q: '다음 중 의미차별 척도에 해당하는 문항은?', opts: [
-        '이 브랜드에 만족한다 — 매우 동의 ~ 매우 비동의',
-        '이 브랜드는… 저렴한 ①②③④⑤⑥⑦ 비싼',
-        '이 브랜드를 추천할 의향은 0~10점 중?',
-        '가장 선호하는 브랜드 순위를 매기시오',
-      ], answer: 1, note: '형성평가 2 — 척도 유형의 구분' },
-  21: { kind: 'quiz', q: 'α=0.62인 6문항 척도, 적절한 개선 조치는? (복수 정답)', opts: [
-        '같은 개념의 문항을 추가한다',
-        'item-if-deleted로 불량 문항을 제거한다',
-        '표본 수를 늘린다',
-        '그대로 사용한다',
-      ], answer: 0, answer2: 1, note: '형성평가 3 — Cronbach α 시나리오' },
+        { t: '입력 전', c: '#6A4FB7', cards: ['개인정보·기밀 가리기', '출처 필요 여부 확인'] },
+        { t: '생성 중', c: '#0091B8', cards: ['근거 요청하기', '단계별로 확인하기'] },
+        { t: '출력 후', c: '#2FA76A', cards: ['사실 대조 검증', '최종 책임자 확인'] },
+      ], note: '토론 — AI 활용 위험을 단계별로 줄이는 방법' },
+  20: { kind: 'quiz', q: '다음 중 좋은 프롬프트의 조건을 가장 잘 갖춘 것은?', opts: [
+        '"이거 잘 써줘"',
+        '"3분기 매출 데이터를 바탕으로, 경영진 대상 A4 1장 요약보고서를 격식체로 작성해줘"',
+        '"보고서"',
+        '"아무거나 만들어줘"',
+      ], answer: 1, note: '형성평가 2 — 좋은 프롬프트의 조건' },
+  21: { kind: 'quiz', q: 'AI가 그럴듯하지만 근거 없는 답(환각)을 냈을 때, 적절한 대응은? (복수 정답)', opts: [
+        '출처를 요청해 원문과 대조한다',
+        '결과를 그대로 사용한다',
+        '다른 질문으로 다시 확인해본다',
+        '더 확신에 찬 답이면 믿는다',
+      ], answer: 0, answer2: 2, note: '형성평가 3 — 그럴듯한 오류를 발견했을 때의 대응' },
   23: { kind: 'table', head: ['오개념', '교정'], rows: [
-        ['신뢰도가 높으면 타당한 측정이다', '일관되게 틀릴 수 있다 — 별개 개념'],
-        ['α는 높을수록 좋다', '0.95 이상은 문항 중복 신호'],
-        ['문항이 많을수록 좋은 척도다', '응답 부담 → 무성의 응답 증가'],
+        ['AI 답은 항상 정답이다', '학습 패턴 기반 추정 — 근거 검증 필요'],
+        ['AI는 중립적이다', '학습 데이터의 편향을 그대로 반영할 수 있다'],
+        ['AI에 맡기면 사람 책임이 없다', '결과 사용의 최종 책임은 사람에게 있다'],
       ], note: '오개념 점검' },
   24: { kind: 'cards', items: [
-        { t: 'Churchill (1979)', d: '척도 개발 패러다임 — 고전 논문' },
-        { t: 'DeVellis, Scale Development 4판', d: '실무 장(章) 중심 추천' },
-        { t: 'K-MOOC 심리측정론', d: '5·6강 연계 시청' },
-        { t: 'AI 튜터 심화 세션', d: '"Cronbach α 직접 계산해보기"' },
+        { t: 'NIST AI RMF', d: 'AI 위험관리 프레임워크 — 실무 적용 참고' },
+        { t: 'UNESCO 생성형 AI 교육 지침', d: '교육 현장 활용 원칙' },
+        { t: 'AI 튜터 심화 세션', d: '"내 업무에 맞는 프롬프트 직접 설계해보기"' },
+        { t: '사내 AI 활용 가이드', d: '조직 내 승인된 도구·데이터 범위 확인' },
       ], note: '심화 학습 안내' },
   25: { kind: 'refs', items: [
-        'Likert, R. (1932). A technique for the measurement of attitudes. Archives of Psychology.',
-        'Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. Psychometrika.',
-        'Malhotra, N. K. (2020). Marketing Research: An Applied Orientation (7th ed.), Ch.9.',
-        'Churchill, G. A. (1979). A paradigm for developing better measures. JMR.',
+        'NIST (2023). AI Risk Management Framework (AI RMF 1.0).',
+        'UNESCO (2023). Guidance for generative AI in education and research.',
+        'OpenAI, Anthropic 등 (2024–2026). 모델 사용 정책 및 안전 가이드 문서.',
+        '한국지능정보사회진흥원 (NIA). AI 윤리·활용 안내서.',
       ], note: 'References' },
   26: { kind: 'cards', items: [
-        { t: '06교시 예고', d: '설문 문항 작성의 원칙' },
-        { t: '연결 고리', d: '오늘의 척도 유형이 문항 작성 규칙을 결정한다' },
-        { t: '예습 질문', d: '"만족하십니까?"는 왜 나쁜 문항인가' },
+        { t: '다음 교시 예고', d: 'AI 에이전트 — 여러 단계를 스스로 수행하는 AI' },
+        { t: '연결 고리', d: '오늘 배운 프롬프트 설계가 에이전트 지시의 기초가 된다' },
+        { t: '예습 질문', d: '"한 번의 요청으로 여러 단계를 처리하게 하려면?"' },
       ], note: '다음 교시 예고' },
   27: { kind: 'checklist', items: [
-        '실습에서 작성한 Likert 문항 3개 정리',
-        '문항별 설계 근거 1쪽 작성',
+        '실습에서 작성한 프롬프트 1개 정리',
+        '설계 근거(목표·맥락·자료·제약·형식) 1쪽 작성',
         'LMS 과제함 제출 — 1주 이내',
-        '평가 기준: 이중 질문 · 편향 통제 · 척도 수준 적합성',
+        '평가 기준: 다섯 요소 포함 여부 · 검증 계획 유무',
       ], note: '과제 안내' },
-  28: { kind: 'center', big: '수고하셨습니다', small: '질문은 LMS Q&A 또는 AI 튜터로 — 다음 교시에 만나요' },
+  28: { kind: 'center', big: '수고하셨습니다', small: '질문은 LMS Q&A 또는 AI 튜터로 — 다음 교시엔 AI 에이전트를 다룹니다' },
 };
 
 const CtNote = ({ text }) => text ? (
