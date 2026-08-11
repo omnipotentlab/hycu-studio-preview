@@ -1,0 +1,92 @@
+const LECTURES = [
+  {
+    id: 'l1', subject: 'AI 리터러시', code: 'AIG101', week: 3,
+    chapter: 'Ch.03 생성형 AI와 협업', title: '생성형 AI의 이해와 업무 활용',
+    status: 'gen', progress: 84, slides: 28, duration: 50, updated: '방금 전',
+    addie: { A: 1, D: 3, Dv: 14, I: 3, E: 7 },
+  },
+  {
+    id: 'l2', subject: 'AI 리터러시', code: 'AIG101', week: 2,
+    chapter: 'Ch.02 머신러닝의 기본', title: '데이터에서 패턴을 배우는 과정',
+    status: 'review', progress: 100, slides: 30, duration: 50, updated: '2시간 전',
+    addie: { A: 2, D: 4, Dv: 18, I: 3, E: 3 },
+  },
+  {
+    id: 'l3', subject: 'AI 리터러시', code: 'AIG101', week: 4,
+    chapter: 'Ch.04 프롬프트 설계', title: '좋은 질문이 좋은 결과를 만든다',
+    status: 'published', progress: 100, slides: 26, duration: 50, updated: '어제',
+    addie: { A: 2, D: 3, Dv: 15, I: 3, E: 3 },
+  },
+  {
+    id: 'l4', subject: 'AI 리터러시', code: 'AIG101', week: 5,
+    chapter: 'Ch.05 책임 있는 AI', title: '검증·저작권·개인정보의 기준',
+    status: 'draft', progress: 18, slides: 9, duration: 50, updated: '3일 전',
+    addie: { A: 1, D: 2, Dv: 6, I: 0, E: 0 },
+  },
+  {
+    id: 'l5', subject: 'AI 리터러시', code: 'AIG101', week: 6,
+    chapter: 'Ch.06 AI 에이전트', title: '도구를 연결해 업무를 자동화하는 법',
+    status: 'published', progress: 100, slides: 31, duration: 50, updated: '1주일 전',
+    addie: { A: 2, D: 4, Dv: 18, I: 4, E: 3 },
+  },
+  {
+    id: 'l6', subject: 'AI 리터러시', code: 'AIG101', week: 7,
+    chapter: 'Ch.07 AI 프로젝트', title: '문제 정의에서 성과 검증까지',
+    status: 'review', progress: 100, slides: 29, duration: 50, updated: '5시간 전',
+    addie: { A: 2, D: 3, Dv: 18, I: 3, E: 3 },
+  },
+];
+
+const CURRENT_DECK = {
+  subject: 'AI 리터러시',
+  course: 'AIG101',
+  week: 3,
+  chapter: 'Ch.03 생성형 AI와 협업',
+  subchapter: '03-02 생성형 AI의 이해와 업무 활용',
+  professor: '홍길동 교수',
+  affiliation: '한양사이버대학교',
+  duration: 50,
+  totalSlides: 28,
+  slides: [
+    { n: 1, phase: '—', type: 'cover', title: '생성형 AI의 이해와 업무 활용', titleLines: ['생성형 AI의 이해와', '업무 활용'], subtitle: 'AI를 빠르게 쓰는 법보다, 함께 일하는 기준을 배웁니다' },
+    { n: 2, phase: 'A', type: 'analysis', title: 'AI를 쓰기 전에 네 가지를 묻습니다', subtitle: '경험에서 출발해 활용과 검증의 기준을 세웁니다' },
+    {
+      n: 3, phase: 'D', type: 'objectives', title: '이번 수업의 목표', subtitle: '이해하고, 설계하고, 검증하고, 책임 있게 사용합니다',
+      objectives: [
+        '생성형 AI가 입력을 바탕으로 결과를 만드는 원리를 설명할 수 있다',
+        '목표·맥락·자료·제약·형식을 포함한 프롬프트를 설계할 수 있다',
+        'AI 결과의 오류와 한계를 근거 중심으로 검증할 수 있다',
+        '개인정보와 저작권을 고려해 사람과 AI의 역할을 나눌 수 있다',
+      ],
+      keywords: ['생성형 AI', '프롬프트', '검증', '환각', '책임 있는 AI'],
+    },
+    { n: 4, phase: 'D', type: 'roadmap', title: '50분 동안 AI 협업의 전 과정을 익힙니다', subtitle: '원리 이해에서 실습과 판단까지 이어지는 학습 경로' },
+    { n: 5, phase: 'Dv', type: 'concept', title: '생성형 AI는 다음 결과를 예측해 만듭니다', subtitle: '학습 데이터의 패턴과 사용자의 입력을 결합하는 시스템' },
+    { n: 6, phase: 'Dv', type: 'concept', title: 'AI는 규칙에서 생성으로 발전해 왔습니다', subtitle: '규칙 기반 시스템부터 생성형 AI까지의 역할 변화' },
+    { n: 7, phase: 'Dv', type: 'concept', title: '좋은 프롬프트에는 다섯 가지가 들어갑니다', subtitle: '목표·맥락·자료·제약·출력 형식을 한 번에 설계합니다' },
+    { n: 8, phase: 'Dv', type: 'comparison', title: 'AI의 속도에는 사람의 검증이 필요합니다', subtitle: '생성은 맡기고 판단과 책임은 사람이 유지합니다' },
+    { n: 9, phase: 'Dv', type: 'placeholder', title: '프롬프트는 네 가지 원칙으로 선명해집니다', subtitle: '구체성·맥락·제약·반복 개선' },
+    { n: 10, phase: 'Dv', type: 'placeholder', title: '업무 특성에 따라 AI의 역할이 달라집니다', subtitle: '정형성·창의성·위험도를 기준으로 활용 범위를 정합니다' },
+    { n: 11, phase: 'Dv', type: 'placeholder', title: 'AI에 맡길 일과 사람이 맡을 일을 구분합니다', subtitle: '속도보다 검토 가능성과 책임 소재를 먼저 봅니다' },
+    { n: 12, phase: 'Dv', type: 'placeholder', title: '좋은 결과는 입력과 검증의 합입니다', subtitle: '목표·맥락·제약·검토가 결과 품질을 결정합니다' },
+    { n: 13, phase: 'Dv', type: 'placeholder', title: '짧은 반복 루프가 결과를 선명하게 만듭니다', subtitle: '초안 생성·피드백·수정의 짧은 루프' },
+    { n: 14, phase: 'Dv', type: 'placeholder', title: 'AI 활용은 탐색·생성·자동화로 확장됩니다', subtitle: '각 단계에서 사람의 검토 지점을 명확히 둡니다' },
+    { n: 15, phase: 'Dv', type: 'placeholder', title: 'AI와 사람은 서로 다른 강점을 가집니다', subtitle: '반복과 초안은 AI, 판단과 책임은 사람' },
+    { n: 16, phase: 'I', type: 'activity', title: '활동: 하나의 업무를 AI 협업으로 바꿉니다', subtitle: '목표 정의부터 최종 검토까지 직접 설계합니다' },
+    { n: 17, phase: 'I', type: 'placeholder', title: '활동: 모호한 프롬프트를 다시 씁니다', subtitle: '요청을 목표·맥락·제약·형식으로 구조화합니다' },
+    { n: 18, phase: 'I', type: 'placeholder', title: '토론: AI 활용 위험을 단계별로 줄입니다', subtitle: '입력 전·생성 중·출력 후의 안전장치' },
+    { n: 19, phase: 'E', type: 'quiz', title: '형성평가 1', subtitle: 'AI에 입력하면 안 되는 정보' },
+    { n: 20, phase: 'E', type: 'placeholder', title: '형성평가 2', subtitle: '좋은 프롬프트의 조건' },
+    { n: 21, phase: 'E', type: 'placeholder', title: '형성평가 3', subtitle: '그럴듯한 오류를 발견했을 때의 대응' },
+    { n: 22, phase: 'E', type: 'summary', title: '생성형 AI 활용의 핵심은 세 가지입니다', subtitle: '구조화된 요청·근거 검증·사람의 책임' },
+    { n: 23, phase: 'E', type: 'placeholder', title: 'AI에 대한 세 가지 오해를 바로잡습니다', subtitle: '정답·중립성·자동화에 대한 현실적인 기준' },
+    { n: 24, phase: 'E', type: 'placeholder', title: '더 깊이 학습할 자료', subtitle: '원리·위험관리·교육 활용을 잇는 읽을거리' },
+    { n: 25, phase: 'E', type: 'placeholder', title: '참고 문헌', subtitle: '생성형 AI의 원리와 책임 있는 활용' },
+    { n: 26, phase: 'E', type: 'placeholder', title: '다음 시간에는 AI 에이전트를 다룹니다', subtitle: '도구를 연결해 여러 단계를 수행하는 AI' },
+    { n: 27, phase: 'E', type: 'placeholder', title: '과제: 나만의 AI 협업 가이드를 만듭니다', subtitle: '하나의 실제 업무를 기준으로 작성합니다' },
+    { n: 28, phase: 'E', type: 'placeholder', title: 'AI는 사고를 확장하는 파트너입니다', subtitle: '생성은 AI와 함께, 판단과 책임은 사람이' },
+  ],
+};
+
+window.LECTURES = LECTURES;
+window.CURRENT_DECK = CURRENT_DECK;
