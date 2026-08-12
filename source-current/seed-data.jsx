@@ -93,5 +93,47 @@ const CURRENT_DECK = {
   ],
 };
 
+// 다국어 번역본 — 시연용 (EN 완료, ZH 준비중)
+const TRANSLATIONS = {
+  en: {
+    label: '영어', native: 'English', short: 'EN', status: 'approved',
+    subject: 'AI Literacy', chapter: 'Ch.03 Working with Generative AI',
+    subchapter: '03-02 Understanding and Applying Generative AI at Work',
+    slides: {
+      1: { title: 'Understanding and Applying Generative AI at Work', subtitle: 'Learning to work with AI, not just use it quickly' },
+      2: { title: 'Ask Four Questions Before You Use AI', subtitle: 'Building standards for use and verification, from experience' },
+      3: { title: "Today's Learning Goals", subtitle: 'Understand, design, verify, and use responsibly' },
+      4: { title: 'Master the Full AI Collaboration Process in 50 Minutes', subtitle: 'A learning path from understanding principles to practice and judgment' },
+      5: { title: 'Generative AI Predicts and Creates the Next Result', subtitle: 'A system combining learned patterns with user input' },
+      6: { title: 'AI Has Evolved from Rules to Generation', subtitle: 'The shifting role of AI from rule-based systems to generative AI' },
+      7: { title: 'A Good Prompt Has Five Elements', subtitle: 'Designing goal, context, data, constraints, and format at once' },
+      8: { title: "AI's Speed Needs Human Verification", subtitle: 'Let AI generate, but keep judgment and responsibility with people' },
+      9: { title: 'Prompts Get Clearer with Four Principles', subtitle: 'Specificity, context, constraints, iterative refinement' },
+      10: { title: "AI's Role Changes with the Nature of the Work", subtitle: 'Set the scope of use based on structure, creativity, and risk' },
+      11: { title: 'Distinguish What to Delegate to AI and What to Keep', subtitle: 'Look at reviewability and accountability before speed' },
+      12: { title: 'Good Results Are the Sum of Input and Verification', subtitle: 'Goal, context, constraints, and review determine result quality' },
+      13: { title: 'Short Feedback Loops Sharpen Results', subtitle: 'A short loop of draft, feedback, and revision' },
+      14: { title: 'AI Use Expands into Exploration, Generation, and Automation', subtitle: 'Set clear human review points at each stage' },
+      15: { title: 'AI and People Have Different Strengths', subtitle: 'Iteration and drafts to AI, judgment and responsibility to people' },
+      16: { title: 'Activity: Turn One Task into AI Collaboration', subtitle: 'Design from goal-setting to final review yourself' },
+      17: { title: 'Activity: Rewrite a Vague Prompt', subtitle: 'Structure a request into goal, context, constraints, and format' },
+      18: { title: 'Discussion: Reduce AI Risk Step by Step', subtitle: 'Safeguards before input, during generation, after output' },
+      19: { title: 'Formative Assessment 1', subtitle: 'Information you should never input to AI' },
+      20: { title: 'Formative Assessment 2', subtitle: 'Conditions of a good prompt' },
+      21: { title: 'Formative Assessment 3', subtitle: 'Responding when you spot a plausible-looking error' },
+      22: { title: 'The Core of Generative AI Use Is Three Things', subtitle: 'Structured requests, evidence verification, human responsibility' },
+      23: { title: 'Correcting Three Misconceptions About AI', subtitle: 'Realistic standards on correctness, neutrality, and automation' },
+      24: { title: 'Resources for Further Study', subtitle: 'Readings connecting principles, risk management, and education' },
+      25: { title: 'References', subtitle: 'Principles and responsible use of generative AI' },
+      26: { title: 'Next Time: AI Agents', subtitle: 'AI that connects tools to perform multiple steps' },
+      27: { title: 'Assignment: Build Your Own AI Collaboration Guide', subtitle: 'Write it based on one real task of yours' },
+      28: { title: 'AI Is a Partner That Extends Your Thinking', subtitle: 'Generate with AI, judge and take responsibility as a person' },
+    },
+  },
+  zh: { label: '중국어', native: '中文', short: 'ZH', status: 'idle' },
+};
+
+window.TRANSLATIONS = TRANSLATIONS;
+
 window.LECTURES = LECTURES;
 window.CURRENT_DECK = CURRENT_DECK;

@@ -180,12 +180,141 @@ const Chroma = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, instruc
   );
 };
 
+// ----- 다국어 번역 허브 -----
+const TranslateHub = ({ deck }) => {
+  const TR = window.TRANSLATIONS || {};
+  const [statuses, setStatuses] = React.useState({ en: TR.en?.status || 'idle', zh: TR.zh?.status || 'idle' });
+  const [progress, setProgress] = React.useState({ en: 0, zh: 0 });
+  const [activeLang, setActiveLang] = React.useState(null);
+  const [selectedSlide, setSelectedSlide] = React.useState(1);
+
+  const startTranslate = (lang) => {
+    if (lang === 'zh') return; // 시연 범위 밖 — 준비중 유지
+    setStatuses(s => ({ ...s, [lang]: 'translating' }));
+    setProgress(p => ({ ...p, [lang]: 0 }));
+    const id = setInterval(() => {
+      setProgress(p => {
+        const next = p[lang] + 14;
+        if (next >= 100) {
+          clearInterval(id);
+          setStatuses(s => ({ ...s, [lang]: 'approved' }));
+          return { ...p, [lang]: 100 };
+        }
+        return { ...p, [lang]: next };
+      });
+    }, 220);
+  };
+
+  const langs = [
+    { id: 'en', ...TR.en },
+    { id: 'zh', ...TR.zh },
+  ];
+
+  const enSlide = TR.en?.slides?.[selectedSlide];
+
+  return (
+    <div>
+      <div className="card" style={{padding:24,marginBottom:14}}>
+        <div style={{display:'flex',alignItems:'center',gap:14}}>
+          <div style={{width:48,height:48,borderRadius:10,background:'rgba(0,181,226,0.1)',display:'grid',placeItems:'center',color:'#0091B8'}}>
+            <Icon name="globe" size={22}/>
+          </div>
+          <div style={{flex:1}}>
+            <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:11,color:'#0091B8',letterSpacing:'0.06em',textTransform:'uppercase',fontWeight:600,marginBottom:4}}>다국어 교안</div>
+            <h2 style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:22,margin:'0 0 4px',fontWeight:600,letterSpacing:'-0.01em'}}>03-02 생성형 AI의 이해와 업무 활용 — 외국어 번역</h2>
+            <div style={{fontSize:13,color:'var(--admin-muted)'}}>28매 · 슬라이드 제목·부제 · 학습 목표 · 키워드 — 일괄 번역</div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12,marginBottom:14}}>
+        {langs.map(l => {
+          const st = statuses[l.id];
+          const dot = st === 'approved' ? '#22A06B' : st === 'translating' ? '#0091B8' : '#A6ADB6';
+          const bg = st === 'approved' ? 'rgba(34,160,107,0.1)' : st === 'translating' ? 'rgba(0,181,226,0.08)' : 'var(--admin-bg)';
+          const label = st === 'approved' ? '번역 완료' : st === 'translating' ? '번역 중' : '대기';
+          return (
+            <div key={l.id} className="card" style={{padding:20,position:'relative',overflow:'hidden'}}>
+              <div style={{position:'absolute',top:0,left:0,right:0,height:3,background:dot}}></div>
+              <div style={{display:'flex',alignItems:'flex-start',gap:14,marginBottom:14}}>
+                <div style={{width:44,height:44,borderRadius:8,background:bg,display:'grid',placeItems:'center',color:dot,flexShrink:0}}>
+                  <span style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:14,fontWeight:700}}>{l.short}</span>
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:16,fontWeight:600,color:'var(--admin-ink)'}}>{l.native}</div>
+                  <div style={{fontSize:12,color:'var(--admin-muted)'}}>{l.label}</div>
+                </div>
+                <span className="pill" style={{background:bg,color:dot,fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontWeight:600,whiteSpace:'nowrap'}}>
+                  <span style={{width:6,height:6,borderRadius:'50%',background:dot,display:'inline-block'}}></span>{label}
+                </span>
+              </div>
+              {st === 'translating' && (
+                <div style={{height:6,background:'var(--admin-line)',borderRadius:3,overflow:'hidden',marginBottom:12}}>
+                  <div style={{height:'100%',background:dot,width:progress[l.id]+'%',transition:'width 0.2s'}}></div>
+                </div>
+              )}
+              {st === 'idle' && (
+                <button className="btn btn-cyan" style={{width:'100%',justifyContent:'center'}} onClick={() => startTranslate(l.id)} disabled={l.id==='zh'}>
+                  <Icon name="sparkles" size={13}/> {l.id === 'zh' ? '준비중' : '일괄 번역 시작'}
+                </button>
+              )}
+              {st === 'approved' && (
+                <button className="btn btn-ghost" style={{width:'100%',justifyContent:'center'}} onClick={() => setActiveLang(activeLang === l.id ? null : l.id)}>
+                  <Icon name="eye" size={12}/> {activeLang === l.id ? '한국어로 보기' : '번역본 미리보기'}
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {activeLang === 'en' && enSlide && (
+        <div className="card" style={{padding:0,overflow:'hidden'}}>
+          <div style={{padding:'12px 16px',borderBottom:'1px solid var(--admin-line)',display:'flex',alignItems:'center',gap:10}}>
+            <Icon name="check" size={13} style={{color:'#22A06B'}}/>
+            <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:12,fontWeight:600}}>English preview · slide {String(selectedSlide).padStart(2,'0')} / 28</div>
+            <div style={{flex:1}}></div>
+            <button className="btn btn-quiet" onClick={() => setSelectedSlide(s => Math.max(1, s-1))}><Icon name="chevronLeft" size={12}/></button>
+            <button className="btn btn-quiet" onClick={() => setSelectedSlide(s => Math.min(28, s+1))}><Icon name="chevronRight" size={12}/></button>
+          </div>
+          <div style={{padding:'20px 22px'}}>
+            <div style={{fontSize:11,color:'var(--admin-muted)',marginBottom:6}}>원문 (KO)</div>
+            <div style={{fontSize:15,fontWeight:600,color:'var(--admin-ink)',marginBottom:2}}>{deck.slides[selectedSlide-1]?.title}</div>
+            <div style={{fontSize:12,color:'var(--admin-muted)',marginBottom:16}}>{deck.slides[selectedSlide-1]?.subtitle}</div>
+            <div style={{fontSize:11,color:'#0091B8',marginBottom:6,fontWeight:600}}>English</div>
+            <div style={{fontSize:15,fontWeight:600,color:'var(--admin-ink)',marginBottom:2}}>{enSlide.title}</div>
+            <div style={{fontSize:12,color:'var(--admin-muted)'}}>{enSlide.subtitle}</div>
+          </div>
+        </div>
+      )}
+
+      <div className="card" style={{padding:18,marginTop:14}}>
+        <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:11,color:'var(--admin-muted)',textTransform:'uppercase',letterSpacing:'0.06em',marginBottom:12,fontWeight:600}}>번역 엔진 설정</div>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14,fontSize:12}}>
+          {[
+            ['엔진', 'Claude 3.5 Sonnet · 학술 모드'],
+            ['톤', '교수 강의체 · 격식 (formal)'],
+            ['용어집', 'HYCU_AI리터러시_v1.0 · 12개 항목'],
+            ['번역 단위', '슬라이드 제목·부제 · 학습목표 · 키워드'],
+          ].map(([k,v], i) => (
+            <div key={i} style={{display:'flex',justifyContent:'space-between',padding:'6px 0',borderBottom:i<2?'1px solid var(--admin-line-soft)':'none'}}>
+              <span style={{color:'var(--admin-muted)'}}>{k}</span>
+              <span style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',color:'var(--admin-ink)',fontWeight:500}}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ExportScreen = ({ onScreen, deck, exportFormat }) => {
   const [done, setDone] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [building, setBuilding] = React.useState(false);
   const [format, setFormat] = React.useState(exportFormat || 'pptx');
-  const extension = { pptx:'pptx', pdf:'pdf', scorm:'zip', mp4:'mp4' }[format];
+  const [tab, setTab] = React.useState('export');
+  const extension = { pptx:'pptx', pdf:'pdf', scorm:'zip', mp4:'html' }[format];
 
   const start = () => {
     setBuilding(true); setProgress(0);
@@ -200,6 +329,17 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
   return (
     <div className="content">
       <button className="btn btn-ghost" onClick={() => onScreen('editor')} style={{marginBottom:14}}><Icon name="chevronLeft" size={13}/> 에디터로</button>
+      <div role="tablist" aria-label="내보내기 탭" style={{display:'flex',gap:8,marginBottom:14}}>
+        <button role="tab" aria-selected={tab==='export'} onClick={()=>setTab('export')}
+          style={{padding:'9px 16px',borderRadius:999,border:'1.5px solid '+(tab==='export'?'var(--hycu-cyan)':'var(--admin-line)'),background:tab==='export'?'var(--hycu-cyan-soft)':'white',color:tab==='export'?'var(--hycu-cyan-deep)':'var(--admin-muted)',fontWeight:600,fontSize:13}}>
+          <Icon name="download" size={13}/> 내보내기
+        </button>
+        <button role="tab" aria-selected={tab==='translate'} onClick={()=>setTab('translate')}
+          style={{padding:'9px 16px',borderRadius:999,border:'1.5px solid '+(tab==='translate'?'var(--hycu-cyan)':'var(--admin-line)'),background:tab==='translate'?'var(--hycu-cyan-soft)':'white',color:tab==='translate'?'var(--hycu-cyan-deep)':'var(--admin-muted)',fontWeight:600,fontSize:13}}>
+          <Icon name="globe" size={13}/> 다국어 번역
+        </button>
+      </div>
+      {tab === 'translate' ? <TranslateHub deck={deck} /> : (
       <div className="card export-card" style={{padding:32}}>
         <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:11,color:'#0091B8',letterSpacing:'0.06em',textTransform:'uppercase',fontWeight:600,marginBottom:6}}>최종 산출물</div>
         <h2 style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:24,margin:'0 0 4px',fontWeight:600,letterSpacing:'-0.01em',wordBreak:'keep-all'}}>HYCU_<wbr/>AI리터러시_<wbr/>3주차_<wbr/>02교시.{extension}</h2>
@@ -210,7 +350,7 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
             { id:'pptx', l:'PowerPoint', sub:'.pptx · 편집 가능', ic:'file', primary:true },
             { id:'pdf', l:'PDF', sub:'.pdf · 인쇄용', ic:'file' },
             { id:'scorm', l:'SCORM', sub:'LMS 패키지', ic:'archive' },
-            { id:'mp4', l:'동영상', sub:'.mp4 · 강의 송출', ic:'play' },
+            { id:'mp4', l:'HTML', sub:'.html · 웹 게시용', ic:'file' },
           ].map(f => (
             <button key={f.id} role="radio" aria-checked={format===f.id} onClick={()=>setFormat(f.id)}
               style={{padding:'18px 14px',background:format===f.id?'var(--hycu-cyan-soft)':'white',border:format===f.id?'2px solid var(--hycu-cyan)':'1.5px solid var(--admin-line)',borderRadius:10,textAlign:'left',cursor:'pointer'}}>
@@ -290,6 +430,7 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
           )}
         </div>
       </div>
+      )}
       <style>{`
         @media (max-width:900px){.export-formats{grid-template-columns:repeat(2,1fr)!important}.export-options{grid-template-columns:1fr!important}}
         @media (max-width:560px){.export-card{padding:20px!important}.export-formats{grid-template-columns:1fr!important;gap:8px!important}.export-formats button{padding:14px!important}}
