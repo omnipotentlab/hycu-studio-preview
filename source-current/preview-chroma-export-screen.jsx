@@ -205,12 +205,6 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalSlideIdx, setModalSlideIdx] = React.useState(0);
 
-  const applyEnLang = (s) => {
-    const tr = TR.en?.slides?.[s.n];
-    if (!tr) return s;
-    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle, titleLines: undefined };
-  };
-
   const startTranslate = (lang) => {
     if (lang === 'zh') return; // 시연 범위 밖 — 준비중 유지
     setStatuses(s => ({ ...s, [lang]: 'translating' }));
@@ -344,12 +338,12 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
           <div className="card" style={{width:'min(960px,100%)',maxHeight:'90vh',overflow:'auto',padding:0}} onClick={e => e.stopPropagation()}>
             <div style={{padding:'14px 18px',borderBottom:'1px solid var(--admin-line)',display:'flex',alignItems:'center',gap:10}}>
               <Icon name="globe" size={14} style={{color:'#0091B8'}}/>
-              <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:13,fontWeight:600}}>EN 번역본 미리보기 — 제목·부제 텍스트 미리보기(전체 EN PPT는 다운로드로 확인)</div>
+              <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:13,fontWeight:600}}>EN 번역본 미리보기 — 다운로드 파일과 동일한 슬라이드 렌더</div>
               <div style={{flex:1}}></div>
               <button className="btn btn-quiet" onClick={() => setModalOpen(false)}><Icon name="x" size={13}/></button>
             </div>
             <div style={{padding:'18px 22px',display:'grid',placeItems:'center'}}>
-              <ScaledSlide slide={applyEnLang(deck.slides[modalSlideIdx])} deck={deck} scale={0.42} frame currentSlide={modalSlideIdx+1}/>
+              <img src={`./assets/en-slides/slide-${String(modalSlideIdx+1).padStart(2,'0')}.png`} alt={`EN slide ${modalSlideIdx+1}`} style={{width:'100%',borderRadius:8,border:'1px solid var(--admin-line)'}}/>
             </div>
             <div style={{display:'flex',alignItems:'center',gap:10,padding:'10px 18px',borderTop:'1px solid var(--admin-line)'}}>
               <button className="btn btn-quiet" onClick={() => setModalSlideIdx(i => Math.max(0,i-1))}><Icon name="chevronLeft" size={13}/></button>
