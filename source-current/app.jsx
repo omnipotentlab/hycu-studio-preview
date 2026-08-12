@@ -10,6 +10,7 @@ function App() {
   const [progress, setProgress] = React.useState(0);
   const [gridMode, setGridMode] = React.useState('grid');
   const [navCollapsed, setNavCollapsed] = React.useState(false);
+  const [previewLang, setPreviewLang] = React.useState('ko');
 
   const onScreen = (s, v = null) => {
     setView(s === 'dashboard' ? v : null);
@@ -44,11 +45,11 @@ function App() {
     case 'review':
       body = <Editor deck={deck} setDeck={setDeck} onScreen={onScreen} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} gridStyle="grid" />; break;
     case 'preview':
-      body = <Preview deck={deck} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} onScreen={onScreen} chroma={false} />; break;
+      body = <Preview deck={deck} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} onScreen={onScreen} chroma={false} previewLang={previewLang} setPreviewLang={setPreviewLang} />; break;
     case 'chroma':
       body = <Chroma deck={deck} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide} onScreen={onScreen} chroma={true} instructorPos="br" instructorScale={1} />; break;
     case 'export':
-      body = <ExportScreen onScreen={onScreen} deck={deck} exportFormat="pptx" />; break;
+      body = <ExportScreen onScreen={onScreen} deck={deck} exportFormat="pptx" previewLang={previewLang} setPreviewLang={setPreviewLang} />; break;
     default:
       body = <Dashboard onScreen={onScreen} lectures={window.LECTURES} gridMode={gridMode} setGridMode={setGridMode} view={view} />;
   }

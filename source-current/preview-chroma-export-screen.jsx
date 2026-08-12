@@ -1,7 +1,14 @@
 // ----- Preview, Chroma, Export screens -----
 
-const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma }) => {
-  const slide = deck.slides[currentSlide];
+const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previewLang, setPreviewLang }) => {
+  const TR = window.TRANSLATIONS || {};
+  const applyLang = (s) => {
+    if (previewLang !== 'en') return s;
+    const tr = TR.en?.slides?.[s.n];
+    if (!tr) return s;
+    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle };
+  };
+  const slide = applyLang(deck.slides[currentSlide]);
   const previewHostRef = React.useRef(null);
   const [previewScale, setPreviewScale] = React.useState(0.55);
   React.useEffect(() => {
@@ -32,6 +39,14 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma }) => {
 
   return (
     <div className="content" style={{maxWidth:'none'}}>
+      {previewLang === 'en' && (
+        <div style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',background:'rgba(0,181,226,0.08)',border:'1px solid rgba(0,145,184,0.3)',borderRadius:10,marginBottom:14}}>
+          <Icon name="globe" size={14} style={{color:'#0091B8'}}/>
+          <span style={{fontSize:12,fontWeight:600,color:'#0091B8'}}>EN 번역본 미리보기 모드 — 제목·부제만 번역 적용(정식 EN PPT 확보 전 임시)</span>
+          <div style={{flex:1}}></div>
+          <button className="btn btn-ghost" onClick={() => setPreviewLang && setPreviewLang('ko')}>한국어로 보기</button>
+        </div>
+      )}
       <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
         <div style={{flex:1}}></div>
         <span className="pill"><Icon name="eye" size={11}/> 학습자 시점 미리보기</span>
@@ -57,7 +72,7 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma }) => {
           {deck.slides.map((s, i) => (
             <button key={i} onClick={() => setCurrentSlide(i)} style={{minWidth:0,overflow:'hidden',padding:3,background:'transparent',border:i===currentSlide?'2px solid var(--hycu-cyan)':'1px solid var(--admin-line)',borderRadius:6,cursor:'pointer'}}>
               <div style={{aspectRatio:'16/9',background:'white',borderRadius:2,overflow:'hidden',position:'relative'}}>
-                <ScaledSlide slide={s} deck={deck} scale={0.07}/>
+                <ScaledSlide slide={applyLang(s)} deck={deck} scale={0.07}/>
                 <div style={{position:'absolute',bottom:2,right:2,background:'rgba(14,17,22,0.7)',color:'white',fontSize:9,padding:'1px 4px',borderRadius:2,fontFamily:'ui-monospace,monospace'}}>{String(s.n).padStart(2,'0')}</div>
               </div>
             </button>
@@ -181,7 +196,7 @@ const Chroma = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, instruc
 };
 
 // ----- 다국어 번역 허브 -----
-const TranslateHub = ({ deck }) => {
+const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
   const TR = window.TRANSLATIONS || {};
   const [statuses, setStatuses] = React.useState({ en: TR.en?.status || 'idle', zh: TR.zh?.status || 'idle' });
   const [progress, setProgress] = React.useState({ en: 0, zh: 0 });
@@ -259,7 +274,10 @@ const TranslateHub = ({ deck }) => {
                 </button>
               )}
               {st === 'approved' && (
-                <button className="btn btn-ghost" style={{width:'100%',justifyContent:'center'}} onClick={() => setActiveLang(activeLang === l.id ? null : l.id)}>
+                <button className="btn btn-ghost" style={{width:'100%',justifyContent:'center'}} onClick={() => {
+                  if (l.id === 'en' && onScreen && setPreviewLang) { setPreviewLang('en'); onScreen('preview'); }
+                  else setActiveLang(activeLang === l.id ? null : l.id);
+                }}>
                   <Icon name="eye" size={12}/> {activeLang === l.id ? '한국어로 보기' : '번역본 미리보기'}
                 </button>
               )}
@@ -308,7 +326,7 @@ const TranslateHub = ({ deck }) => {
   );
 };
 
-const ExportScreen = ({ onScreen, deck, exportFormat }) => {
+const ExportScreen = ({ onScreen, deck, exportFormat, previewLang, setPreviewLang }) => {
   const [done, setDone] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [building, setBuilding] = React.useState(false);
@@ -339,7 +357,7 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
           <Icon name="globe" size={13}/> 다국어 번역
         </button>
       </div>
-      {tab === 'translate' ? <TranslateHub deck={deck} /> : (
+      {tab === 'translate' ? <TranslateHub deck={deck} onScreen={onScreen} setPreviewLang={setPreviewLang} /> : (
       <div className="card export-card" style={{padding:32}}>
         <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:11,color:'#0091B8',letterSpacing:'0.06em',textTransform:'uppercase',fontWeight:600,marginBottom:6}}>최종 산출물</div>
         <h2 style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:24,margin:'0 0 4px',fontWeight:600,letterSpacing:'-0.01em',wordBreak:'keep-all'}}>HYCU_<wbr/>AI리터러시_<wbr/>3주차_<wbr/>02교시.{extension}</h2>
