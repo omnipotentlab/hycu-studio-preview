@@ -280,7 +280,12 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
               <span style={{fontFamily:'ui-monospace,monospace',fontSize:11,minWidth:30,textAlign:'right'}}>{progress}%</span>
             </div>
           )}
-          {done && (
+          {done && format === 'pptx' && (
+            <a className="btn btn-cyan" href="./assets/HYCU_AI%EB%A6%AC%ED%84%B0%EB%9F%AC%EC%8B%9C_3%EC%A3%BC%EC%B0%A8_02%EA%B5%90%EC%8B%9C.pptx" download="HYCU_AI리터러시_3주차_02교시.pptx" style={{textDecoration:'none'}}>
+              <Icon name="check" size={14}/> 다운로드 완료 · 다시 받기
+            </a>
+          )}
+          {done && format !== 'pptx' && (
             <button className="btn btn-cyan"><Icon name="check" size={14}/> 다운로드 완료 · 다시 받기</button>
           )}
         </div>
