@@ -42,7 +42,7 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previe
       {previewLang === 'en' && (
         <div style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',background:'rgba(0,181,226,0.08)',border:'1px solid rgba(0,145,184,0.3)',borderRadius:10,marginBottom:14}}>
           <Icon name="globe" size={14} style={{color:'#0091B8'}}/>
-          <span style={{fontSize:12,fontWeight:600,color:'#0091B8'}}>EN 번역본 미리보기 모드 — 제목·부제만 번역 적용(정식 EN PPT 확보 전 임시)</span>
+          <span style={{fontSize:12,fontWeight:600,color:'#0091B8'}}>EN 번역본 미리보기 모드 — 화면은 제목·부제 텍스트 미리보기, 전체 EN PPT는 다국어 번역 탭에서 다운로드</span>
           <div style={{flex:1}}></div>
           <button className="btn btn-ghost" onClick={() => setPreviewLang && setPreviewLang('ko')}>한국어로 보기</button>
         </div>
@@ -274,12 +274,20 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
                 </button>
               )}
               {st === 'approved' && (
-                <button className="btn btn-ghost" style={{width:'100%',justifyContent:'center'}} onClick={() => {
-                  if (l.id === 'en' && onScreen && setPreviewLang) { setPreviewLang('en'); onScreen('preview'); }
-                  else setActiveLang(activeLang === l.id ? null : l.id);
-                }}>
-                  <Icon name="eye" size={12}/> {activeLang === l.id ? '한국어로 보기' : '번역본 미리보기'}
-                </button>
+                <div style={{display:'flex',gap:8}}>
+                  <button className="btn btn-ghost" style={{flex:1,justifyContent:'center'}} onClick={() => {
+                    if (l.id === 'en' && onScreen && setPreviewLang) { setPreviewLang('en'); onScreen('preview'); }
+                    else setActiveLang(activeLang === l.id ? null : l.id);
+                  }}>
+                    <Icon name="eye" size={12}/> {activeLang === l.id ? '한국어로 보기' : '번역본 미리보기'}
+                  </button>
+                  {l.id === 'en' && (
+                    <a className="btn btn-cyan" style={{flex:1,justifyContent:'center',textDecoration:'none'}}
+                      href="./assets/HYCU_AI_Literacy_W3_S02_EN.pptx" download="HYCU_AI_Literacy_W3_S02_EN.pptx">
+                      <Icon name="download" size={12}/> EN PPT 다운로드
+                    </a>
+                  )}
+                </div>
               )}
             </div>
           );
