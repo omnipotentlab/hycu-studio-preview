@@ -6,7 +6,7 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previe
     if (previewLang !== 'en') return s;
     const tr = TR.en?.slides?.[s.n];
     if (!tr) return s;
-    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle };
+    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle, titleLines: undefined };
   };
   const slide = applyLang(deck.slides[currentSlide]);
   const previewHostRef = React.useRef(null);
