@@ -202,6 +202,14 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
   const [progress, setProgress] = React.useState({ en: 0, zh: 0 });
   const [activeLang, setActiveLang] = React.useState(null);
   const [selectedSlide, setSelectedSlide] = React.useState(1);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [modalSlideIdx, setModalSlideIdx] = React.useState(0);
+
+  const applyEnLang = (s) => {
+    const tr = TR.en?.slides?.[s.n];
+    if (!tr) return s;
+    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle, titleLines: undefined };
+  };
 
   const startTranslate = (lang) => {
     if (lang === 'zh') return; // 시연 범위 밖 — 준비중 유지
@@ -276,7 +284,7 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
               {st === 'approved' && (
                 <div style={{display:'flex',gap:8}}>
                   <button className="btn btn-ghost" style={{flex:1,justifyContent:'center'}} onClick={() => {
-                    if (l.id === 'en' && onScreen && setPreviewLang) { setPreviewLang('en'); onScreen('preview'); }
+                    if (l.id === 'en') { setModalSlideIdx(0); setModalOpen(true); }
                     else setActiveLang(activeLang === l.id ? null : l.id);
                   }}>
                     <Icon name="eye" size={12}/> {activeLang === l.id ? '한국어로 보기' : '번역본 미리보기'}
@@ -330,6 +338,30 @@ const TranslateHub = ({ deck, onScreen, setPreviewLang }) => {
           ))}
         </div>
       </div>
+
+      {modalOpen && (
+        <div style={{position:'fixed',inset:0,background:'rgba(14,17,22,0.6)',display:'grid',placeItems:'center',zIndex:1000,padding:24}} onClick={() => setModalOpen(false)}>
+          <div className="card" style={{width:'min(960px,100%)',maxHeight:'90vh',overflow:'auto',padding:0}} onClick={e => e.stopPropagation()}>
+            <div style={{padding:'14px 18px',borderBottom:'1px solid var(--admin-line)',display:'flex',alignItems:'center',gap:10}}>
+              <Icon name="globe" size={14} style={{color:'#0091B8'}}/>
+              <div style={{fontFamily:'Pretendard Variable, Pretendard, system-ui, sans-serif',fontSize:13,fontWeight:600}}>EN 번역본 미리보기 — 제목·부제 텍스트 미리보기(전체 EN PPT는 다운로드로 확인)</div>
+              <div style={{flex:1}}></div>
+              <button className="btn btn-quiet" onClick={() => setModalOpen(false)}><Icon name="x" size={13}/></button>
+            </div>
+            <div style={{padding:'18px 22px',display:'grid',placeItems:'center'}}>
+              <ScaledSlide slide={applyEnLang(deck.slides[modalSlideIdx])} deck={deck} scale={0.42} frame currentSlide={modalSlideIdx+1}/>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:10,padding:'10px 18px',borderTop:'1px solid var(--admin-line)'}}>
+              <button className="btn btn-quiet" onClick={() => setModalSlideIdx(i => Math.max(0,i-1))}><Icon name="chevronLeft" size={13}/></button>
+              <div style={{flex:1,height:6,background:'var(--admin-line)',borderRadius:3,overflow:'hidden'}}>
+                <div style={{height:'100%',background:'var(--hycu-cyan)',width:((modalSlideIdx+1)/deck.slides.length*100)+'%'}}></div>
+              </div>
+              <span style={{fontFamily:'ui-monospace,monospace',fontSize:12,color:'var(--admin-muted)',minWidth:60,textAlign:'center'}}>{String(modalSlideIdx+1).padStart(2,'0')} / {String(deck.slides.length).padStart(2,'0')}</span>
+              <button className="btn btn-quiet" onClick={() => setModalSlideIdx(i => Math.min(deck.slides.length-1,i+1))}><Icon name="chevronRight" size={13}/></button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
