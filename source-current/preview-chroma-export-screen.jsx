@@ -369,7 +369,6 @@ const ExportScreen = ({ onScreen, deck, exportFormat }) => {
               ['교수자 내레이션 스크립트 (notes)', true],
               ['ADDIE 단계 메타데이터', true],
               ['슬라이드 마스터 (재사용)', true],
-              ['교수자 크로마키 합성', false],
               ['형성평가 정답 표시', false],
               ['원본 교안 언어 유지', true],
             ].map(([l,d], i, a) => (

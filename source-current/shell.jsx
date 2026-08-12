@@ -9,7 +9,7 @@ const PROCESS = [
   { id: 'editor',       label: '편집',        sub: '슬라이드 수정' },
   { id: 'inspection',   label: '검수',        sub: '전체 규칙 검사' },
   { id: 'preview',      label: '미리보기',    sub: '최종 확인' },
-  { id: 'export',       label: '내보내기',       sub: 'PPTX · PDF · SCORM · MP4' },
+  { id: 'export',       label: '내보내기',       sub: 'PPTX · PDF · SCORM · HTML' },
 ];
 const PROCESS_ALIAS = { addie: 'editor', review: 'editor', chroma: 'preview' };
 const processIndex = (screen) => PROCESS.findIndex(p => p.id === (PROCESS_ALIAS[screen] || screen));
@@ -156,7 +156,7 @@ const Topbar = ({ screen, deck, onScreen, onToggleNav }) => {
     review: { crumbs: ['교안 생성', deck.chapter], title: deck.subchapter + ' · 편집 · 검수' },
     preview: { crumbs: ['교안 생성', deck.chapter], title: '슬라이드 미리보기' },
     chroma: { crumbs: ['교안 생성'], title: '교수자 크로마키 시뮬레이터' },
-    export: { crumbs: ['교안 생성', deck.subject], title: 'PPTX · PDF · SCORM · MP4 내보내기' }};
+    export: { crumbs: ['교안 생성', deck.subject], title: 'PPTX · PDF · SCORM · HTML 내보내기' }};
   const meta = titles[screen] || titles.dashboard;
   return (
     <div className="topbar">
