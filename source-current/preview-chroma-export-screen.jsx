@@ -1,14 +1,8 @@
 // ----- Preview, Chroma, Export screens -----
 
 const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previewLang, setPreviewLang }) => {
-  const TR = window.TRANSLATIONS || {};
-  const applyLang = (s) => {
-    if (previewLang !== 'en') return s;
-    const tr = TR.en?.slides?.[s.n];
-    if (!tr) return s;
-    return { ...s, title: tr.title || s.title, subtitle: tr.subtitle || s.subtitle, titleLines: undefined };
-  };
-  const slide = applyLang(deck.slides[currentSlide]);
+  const slide = deck.slides[currentSlide];
+  const enSrc = (n) => `./assets/en-slides/slide-${String(n).padStart(2,'0')}.png`;
   const previewHostRef = React.useRef(null);
   const [previewScale, setPreviewScale] = React.useState(0.55);
   React.useEffect(() => {
@@ -42,18 +36,23 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previe
       {previewLang === 'en' && (
         <div style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',background:'rgba(0,181,226,0.08)',border:'1px solid rgba(0,145,184,0.3)',borderRadius:10,marginBottom:14}}>
           <Icon name="globe" size={14} style={{color:'#0091B8'}}/>
-          <span style={{fontSize:12,fontWeight:600,color:'#0091B8'}}>EN 번역본 미리보기 모드 — 화면은 제목·부제 텍스트 미리보기, 전체 EN PPT는 다국어 번역 탭에서 다운로드</span>
+          <span style={{fontSize:12,fontWeight:600,color:'#0091B8'}}>EN 번역본 미리보기 모드 — 다운로드 파일과 동일한 슬라이드 렌더</span>
           <div style={{flex:1}}></div>
           <button className="btn btn-ghost" onClick={() => setPreviewLang && setPreviewLang('ko')}>한국어로 보기</button>
         </div>
       )}
       <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
         <div style={{flex:1}}></div>
+        {previewLang !== 'en' && (
+          <button className="btn btn-ghost" onClick={() => setPreviewLang && setPreviewLang('en')}><Icon name="globe" size={12}/> EN 미리보기</button>
+        )}
         <span className="pill"><Icon name="eye" size={11}/> 학습자 시점 미리보기</span>
       </div>
 
       <div ref={previewHostRef} className="preview-stage" style={{display:'grid',placeItems:'center',padding:'12px 0',minWidth:0,width:'100%',maxWidth:'100%',overflow:'hidden'}}>
-        <ScaledSlide slide={slide} deck={deck} scale={previewScale} frame currentSlide={currentSlide+1} chroma={chroma}/>
+        {previewLang === 'en'
+          ? <img src={enSrc(currentSlide+1)} alt={`EN slide ${currentSlide+1}`} style={{width:1920*previewScale,borderRadius:6,border:'1px solid var(--admin-line)'}}/>
+          : <ScaledSlide slide={slide} deck={deck} scale={previewScale} frame currentSlide={currentSlide+1} chroma={chroma}/>}
       </div>
 
       <div className="preview-transport" style={{display:'flex',alignItems:'center',gap:10,padding:'10px 14px',background:'white',border:'1px solid var(--admin-line)',borderRadius:10,marginTop:12}}>
@@ -72,7 +71,9 @@ const Preview = ({ deck, currentSlide, setCurrentSlide, onScreen, chroma, previe
           {deck.slides.map((s, i) => (
             <button key={i} onClick={() => setCurrentSlide(i)} style={{minWidth:0,overflow:'hidden',padding:3,background:'transparent',border:i===currentSlide?'2px solid var(--hycu-cyan)':'1px solid var(--admin-line)',borderRadius:6,cursor:'pointer'}}>
               <div style={{aspectRatio:'16/9',background:'white',borderRadius:2,overflow:'hidden',position:'relative'}}>
-                <ScaledSlide slide={applyLang(s)} deck={deck} scale={0.07}/>
+                {previewLang === 'en'
+                  ? <img src={enSrc(s.n)} alt={`EN slide ${s.n}`} style={{width:'100%',height:'100%',objectFit:'cover'}}/>
+                  : <ScaledSlide slide={s} deck={deck} scale={0.07}/>}
                 <div style={{position:'absolute',bottom:2,right:2,background:'rgba(14,17,22,0.7)',color:'white',fontSize:9,padding:'1px 4px',borderRadius:2,fontFamily:'ui-monospace,monospace'}}>{String(s.n).padStart(2,'0')}</div>
               </div>
             </button>
